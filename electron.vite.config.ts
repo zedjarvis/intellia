@@ -1,6 +1,9 @@
 import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
+import UnoCSS from 'unocss/vite'
+import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import VueJsx from '@vitejs/plugin-vue-jsx'
 
 export default defineConfig({
   main: {
@@ -15,6 +18,15 @@ export default defineConfig({
         '@renderer': resolve('src/renderer/src')
       }
     },
-    plugins: [vue()]
+    plugins: [
+      vue({
+        template: { transformAssetUrls }
+      }),
+      VueJsx({}),
+      Vuetify({
+        autoImport: true
+      }),
+      UnoCSS()
+    ]
   }
 })
